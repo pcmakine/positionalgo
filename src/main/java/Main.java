@@ -17,6 +17,7 @@ public class Main {
         List<FingerPrint> kClosest = getKNeighbours(parser.parsePrints(args[0], false).get(0), parser.parsePrints(args[1], true), 1);
 
         FingerPrint closest = kClosest.get(0);
+        System.out.println("");
         System.out.println("The estimated location is at coordinates z:" + closest.getZ() + " x: " + closest.getX() + " y: " + closest.getY());
     }
 
@@ -34,7 +35,7 @@ public class Main {
         int count = 1;
         System.out.println(PRINT_N_NEIGHBOURS + " closest prints ordered by distance: ");
         for( FingerPrint trainingPrint: trainingData){
-            if( count > PRINT_N_NEIGHBOURS){
+            if( count > PRINT_N_NEIGHBOURS || count >= trainingData.size()){
                 break;
             }
             System.out.println(count + ": " + trainingPrint.getDistanceDebugPrint());
@@ -63,9 +64,6 @@ public class Main {
         }
         double euclideanDiff = Math.sqrt(distanceSquaredSum);
 
-        if(count == 0){
-            return Double.MAX_VALUE;
-        }
         double averageEuclideanDiff = euclideanDiff/count;
         return averageEuclideanDiff;
 
